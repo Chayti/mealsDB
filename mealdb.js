@@ -79,6 +79,7 @@ const displaySearchResult = (meals, dataLimit) => {
                     <div class="card-body">
                         <h5 class="card-title fw-bold">${meal.strMeal}</h5>
                         <p class="card-text">${meal.strInstructions.slice(0, 150)}</p>
+                        <button onclick="loadMealDetails('${meal.idMeal}')" href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mealDetailModal">Show Details</button>
                     </div>
                 </div>
             `;
