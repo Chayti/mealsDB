@@ -5,7 +5,6 @@ fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=chicken`)
     .then(res => res.json())
     .then(data => {
         const searchResult = document.getElementById('search-result');
-        searchResult.classList.add('row-cols-md-3');
         if (data.meals.length > 6) {
             data.meals = data.meals.slice(0, 6);
             const showAll = document.getElementById('show-all');
@@ -14,14 +13,20 @@ fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=chicken`)
         data.meals.forEach(meal => {
             // console.log(meal);
             const div = document.createElement('div');
-            div.classList.add('col');
+            div.classList.add('col-md-6');
             div.innerHTML = `
-        <div class="card h-100 bg-secondary-subtle">
-                <img src="${meal.strMealThumb}" class="card-img-top p-4" width="80" height="220" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">${meal.strMeal}</h5>
-                    <p class="card-text">${meal.strInstructions.slice(0, 150)}</p>
-                    <button onclick="loadMealDetails('${meal.idMeal}')" href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mealDetailModal">Show Details</button>
+            <div class="card h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="${meal.strMealThumb}" class="img-fuild" width="150" height="220" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">${meal.strMeal}</h5>
+                            <p class="card-text">${meal.strInstructions.slice(0, 150)}</p>
+                            <a onclick="loadMealDetails('${meal.idMeal}')" href="#" class="text-warning" data-bs-toggle="modal" data-bs-target="#mealDetailModal">Show Details</a>
+                         </div>
+                    </div>
                 </div>
             </div>
         `;
@@ -68,21 +73,26 @@ const displaySearchResult = (meals, dataLimit) => {
 
 
     else {
-        searchResult.classList.add('row-cols-md-3');
         meals.forEach(meal => {
             // console.log(meal);
             const div = document.createElement('div');
-            div.classList.add('col');
+            div.classList.add('col-md-6');
             div.innerHTML = `
-            <div class="card h-100 bg-secondary-subtle">
-                    <img src="${meal.strMealThumb}" class="card-img-top p-4"  width="80" height="220"  alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">${meal.strMeal}</h5>
-                        <p class="card-text">${meal.strInstructions.slice(0, 150)}</p>
-                        <button onclick="loadMealDetails('${meal.idMeal}')" href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mealDetailModal">Show Details</button>
+            <div class="card h-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="${meal.strMealThumb}" class="img-fuild" width="150" height="220" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">${meal.strMeal}</h5>
+                            <p class="card-text">${meal.strInstructions.slice(0, 150)}</p>
+                            <a onclick="loadMealDetails('${meal.idMeal}')" href="#" class="text-warning" data-bs-toggle="modal" data-bs-target="#mealDetailModal">Show Details</a>
+                         </div>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
             searchResult.appendChild(div);
         });
     }
@@ -109,6 +119,9 @@ const displayMealDetails = meal => {
     const mealDetails = document.getElementById('meal-details');
     // console.log();
     mealDetails.innerHTML = `
+        <div class=" mb-4">
+            <img src="${meal.strMealThumb}" width="100" height="300" class="card-img-top p-3" alt="...">
+        </div>
         <p><span class="fw-bold">Category:</span> ${meal.strCategory ? meal.strCategory : 'No Category Found'}</p>
         <p><span class="fw-bold">Special in:</span> ${meal.strArea ? meal.strArea : 'No Specified Region'}</p>
         <span class="fw-bold">Recipe link:</span> <a href=${meal.strYoutube}>${meal.strYoutube ? meal.strYoutube : 'No Recipe found'}</a>
